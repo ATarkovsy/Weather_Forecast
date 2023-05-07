@@ -2,11 +2,13 @@ import requests
 import json
 import pymorphy2
 
+morph = pymorphy2.MorphAnalyzer()
+
 print('Пожалуйста, введите город, в котором желаете узнать погодные условия')
 
-morph = pymorphy2.MorphAnalyzer()
 city = str(input())
-morph.parse(city)
+morph_city_name = morph.parse(city)[0]
+sity = morph_city_name.inflect({'loct'}).word.capitalize()
 
 url = ('https://api.openweathermap.org/data/2.5/weather?q='+city+'&units=metric&lang=ru&appid=79d1ca96933b0328e1c7e3e7a26cb347')
 
@@ -18,21 +20,20 @@ temperature_feels = round(weather_data['main']['feels_like'])
 wind_speed = (weather_data['wind']['speed'])
 humidity = (weather_data['main']['humidity'])
 
-print('Сейчас в', city , str(temperature), 'градусов.', end='')
+print('Сейчас в', sity , str(temperature), 'градусов.', end='')
 print('Ощущается как', str(temperature_feels), 'градусов. ')
 print('Скорость ветра', str(wind_speed), 'м/с. ', end='')
 print('Влажность воздуха', str(humidity), '%')
 
-if wind_speed <= 5:
+if wind_speed <= 1:
     print('Штиль. ',end='')
 elif wind_speed <= 10:
-        print('Ветренно. ',end='')
+    print('Ветренно. ',end='')
 elif wind_speed <= 20:
-            print('Сильные порывы ветра. ',end='')
-
-if humidity <= 35:
+    print('Сильные порывы ветра. ',end='')
+if humidity <= 60:
     print('Ясно, небольшая облачность.')
-elif humidity <=65:
-        print('Пасмурно, возможны осадки.')
+elif humidity <=85:
+    print('Пасмурно, возможны осадки.')
 elif humidity <=100:
-            print('Дождь.')
+    print('Дождь.')
