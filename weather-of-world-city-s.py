@@ -19,11 +19,15 @@ temperature = round(weather_data['main']['temp'])
 temperature_feels = round(weather_data['main']['feels_like'])
 wind_speed = (weather_data['wind']['speed'])
 humidity = (weather_data['main']['humidity'])
+status_of_weather = (weather_data['weather'][0]['description'])          #Спросить позже у Котика
 
-print('Сейчас в', sity , str(temperature), 'градусов.', end='')
+
+
+print('Сейчас в', sity , str(temperature), 'градусов. ', end='')
 print('Ощущается как', str(temperature_feels), 'градусов. ')
 print('Скорость ветра', str(wind_speed), 'м/с. ', end='')
 print('Влажность воздуха', str(humidity), '%')
+print(str(status_of_weather).capitalize())
 
 if wind_speed <= 1:
     print('Штиль. ',end='')
@@ -31,9 +35,3 @@ elif wind_speed <= 10:
     print('Ветренно. ',end='')
 elif wind_speed <= 20:
     print('Сильные порывы ветра. ',end='')
-if humidity <= 60:
-    print('Ясно, небольшая облачность.')
-elif humidity <=85:
-    print('Пасмурно, возможны осадки.')
-elif humidity <=100:
-    print('Дождь.')
